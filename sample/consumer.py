@@ -1,4 +1,8 @@
+import os
+from dotenv import load_dotenv
 import pika
+
+load_dotenv()
 
 def callback(ch, method, properties, body):
     """
@@ -25,7 +29,8 @@ def main():
     >>> main()
     Waiting for messages. To exit press CTRL+C
     """
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    rabbitmq_host = os.getenv('RABBITMQ_HOST', 'localhost')
+    connection = pika.BlockingConnection(pika.ConnectionParameters(rabbitmq_host))
     channel = connection.channel()
     channel.queue_declare(queue='chat_queue', durable=True)
     channel.basic_qos(prefetch_count=1)  # Fair dispatch

@@ -1,0 +1,25 @@
+# producer-cronjob.yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: producer-cronjob
+spec:
+  schedule: "*/1 * * * *"  # Runs every minute
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: chat-producer
+            image: 13angs/rabbitmq-producer:latest
+            env:
+            - name: RABBITMQ_HOST
+              value: "my-rabbitmq.default.svc.cluster.local"
+            - name: RABBITMQ_USER
+              value: "user"
+            - name: RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: my-rabbitmq
+                  key: rabbitmq-password
+          restartPolicy: OnFailure

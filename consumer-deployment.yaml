@@ -1,0 +1,28 @@
+# consumer-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+      - name: consumer
+        image: 13angs/rabbitmq-consumer:latest
+        env:
+        - name: RABBITMQ_HOST
+          value: "my-rabbitmq.default.svc.cluster.local"
+        - name: RABBITMQ_USER
+          value: "user"
+        - name: RABBITMQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: my-rabbitmq
+              key: rabbitmq-password

@@ -18,7 +18,7 @@ spec:
         image: 13angs/rabbitmq-consumer:latest
         env:
         - name: RABBITMQ_HOST
-          value: "my-rabbitmq.default.svc.cluster.local"
+          value: "rabbitmq-dev-srv.default.svc.cluster.local"
         - name: RABBITMQ_USER
           value: "user"
         - name: RABBITMQ_PASSWORD

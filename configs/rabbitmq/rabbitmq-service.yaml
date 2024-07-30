@@ -1,0 +1,10 @@
+# rabbitmq-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-dev-srv
+spec:
+  ports:
+    - port: 5672
+  selector:
+    app.kubernetes.io/name: rabbitmq
